@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/movie_navigation">
+
+    <fragment
+        android:id="@+id/movie_navigation"
+        android:name="com.dicoding.jetpack.themoviedb.ui.movies.MoviesFragment"
+        android:label="Popular Movies"
+        tools:layout="@layout/fragment_movies"/>
+    <fragment
+        android:id="@+id/tv_show_navigation"
+        android:name="com.dicoding.jetpack.themoviedb.ui.tv_show.TvShowFragment"
+        android:label="Popular Tv Shows"
+        tools:layout="@layout/fragment_tv_show"/>
+    <fragment
+        android:id="@+id/favorite_navigation"
+        android:name="com.dicoding.jetpack.themoviedb.ui.favorite.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/favorite_fragment"/>
+    <fragment
+        android:id="@+id/favorite_movie_navigation"
+        android:name="com.dicoding.jetpack.themoviedb.ui.favorite.data.FavoriteMovieFragment"
+        android:label="Favorite Movies"
+        tools:layout="@layout/favorite_movie_fragment"/>
+    <fragment
+        android:id="@+id/favorite_tvshow_navigation"
+        android:name="com.dicoding.jetpack.themoviedb.ui.favorite.data.FavoriteTvShowFragment"
+        android:label="Favorite Tv Show"
+        tools:layout="@layout/favorite_tv_show_fragment"/>
+
+</navigation>
