@@ -45,19 +45,19 @@ class FavoriteMovieFragment : DaggerFragment() {
 
             viewModel.getFavoriteMovies().observe(viewLifecycleOwner, {
                 if (it!=null) {
-//                    binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
                     binding.apply {
                         rvFavoriteMovies.adapter?.let {adapter ->
                             when (adapter) {
                                 is MoviesAdapter -> {
                                     if (it.isNullOrEmpty()){
-//                                        rvFavoriteMovies.visibility = View.GONE
-//                                        progressBar.visibility = View.GONE
-//                                        Toast.makeText(context, "Data is Empty!", Toast.LENGTH_SHORT).show()
-//                                    } else {
-//                                        progressBar.visibility = View.GONE
-//                                        adapter.submitList(it)
-//                                        adapter.notifyDataSetChanged()
+                                        rvFavoriteMovies.visibility = View.GONE
+                                        progressBar.visibility = View.GONE
+                                        Toast.makeText(context, "Data is Empty!", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        progressBar.visibility = View.GONE
+                                        adapter.submitList(it)
+                                        adapter.notifyDataSetChanged()
                                     }
                                 }
                             }

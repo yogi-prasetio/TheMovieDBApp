@@ -47,7 +47,7 @@ class DetailActivity : DaggerAppCompatActivity() {
             binding.tvItemDescription.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
         }
 
-        if (data?.equals("movies") == true) {
+        if (data?.equals("Movies") == true) {
             detailMovieObserve(id)
         } else if (data?.equals("Tv Show") == true) {
             detailTvShowObserve(idTv)

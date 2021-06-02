@@ -60,7 +60,7 @@ class MoviesAdapter: PagedListAdapter<MoviesEntity, MoviesAdapter.MoviesViewHold
                     .into(imgPoster)
 
                 itemView.setOnClickListener {
-                    val detail = "movies"
+                    val detail = "Movies"
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra(DetailActivity.EXTRA_MOVIES, movies.id)
                     intent.putExtra(DetailActivity.EXTRA_DATA, detail)
