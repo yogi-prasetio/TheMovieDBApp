@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpack.themoviedb.databinding.FavoriteTvShowFragmentBinding
 import com.dicoding.jetpack.themoviedb.ui.favorite.FavoriteViewModel
+import com.dicoding.jetpack.themoviedb.ui.movies.MoviesAdapter
 import com.dicoding.jetpack.themoviedb.ui.tv_show.TvShowAdapter
 import com.dicoding.jetpack.themoviedb.utils.Status
 import com.dicoding.jetpack.themoviedb.viewmodel.ViewModelFactory
@@ -50,20 +51,25 @@ class FavoriteTvShowFragment : DaggerFragment() {
         activity?.let {
             viewModel.getFavoriteTvShows().observe(viewLifecycleOwner, {
                 if (it!=null) {
-//                    binding.progressBar.visibility = View.VISIBLE
-                        binding.rvFavoriteTvShows.adapter.let { adapter ->
-                                when (adapter) {
-                                    is TvShowAdapter -> {
-                                        if (it.isNullOrEmpty()) {
-                                            binding.progressBar.visibility = View.VISIBLE
-                                        } else {
-                                            Toast.makeText(context, "Data is already!", Toast.LENGTH_SHORT).show()
-                                            adapter.submitList(it)
-                                            adapter.notifyDataSetChanged()
-                                        }
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.apply {
+                        rvFavoriteTvShows.adapter?.let {adapter ->
+                            when (adapter) {
+                                is TvShowAdapter -> {
+                                    if (it.isNullOrEmpty()){
+                                        rvFavoriteTvShows.visibility = View.GONE
+                                        progressBar.visibility = View.GONE
+                                        dataEmpty.visibility = View.VISIBLE
+                                        tvDesc.visibility = View.VISIBLE
+                                    } else {
+                                        progressBar.visibility = View.GONE
+                                        adapter.submitList(it)
+                                        adapter.notifyDataSetChanged()
                                     }
                                 }
                             }
+                        }
+                    }
                 }
             })
         }

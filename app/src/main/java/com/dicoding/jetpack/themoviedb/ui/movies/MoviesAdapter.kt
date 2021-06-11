@@ -20,7 +20,7 @@ import com.dicoding.jetpack.themoviedb.ui.detail.DetailActivity
 class MoviesAdapter: PagedListAdapter<MoviesEntity, MoviesAdapter.MoviesViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        const val BASE_URL = "https://image.tmdb.org/t/p/w500"
+        const val BASE_URL = "https://image.tmdb.org/t/p/original"
         private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<MoviesEntity>(){
             override fun areItemsTheSame(oldItem: MoviesEntity, newItem: MoviesEntity): Boolean {
                 return oldItem.movie_id == newItem.movie_id
@@ -28,6 +28,32 @@ class MoviesAdapter: PagedListAdapter<MoviesEntity, MoviesAdapter.MoviesViewHold
 
             override fun areContentsTheSame(oldItem: MoviesEntity, newItem: MoviesEntity): Boolean {
                 return oldItem == newItem
+            }
+        }
+    }
+
+    class MoviesViewHolder (private val binding: ItemsListBinding): RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("WrongConstant")
+        fun bind(movies: MoviesEntity) {
+            with(binding) {
+                val detail = "Movies"
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    tvItemDescription.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+                }
+                tvItemTitle.text = movies.title
+                tvItemDescription.text = movies.overview
+
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_MOVIES, movies.movie_id)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, detail)
+                    itemView.context.startActivity(intent)
+                }
+
+                Glide.with(itemView.context)
+                    .load(BASE_URL + movies.poster_path)
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
+                    .into(imgPoster)
             }
         }
     }
@@ -41,32 +67,6 @@ class MoviesAdapter: PagedListAdapter<MoviesEntity, MoviesAdapter.MoviesViewHold
         val data = getItem(position)
         if(data != null){
             holder.bind(data)
-        }
-    }
-
-    class MoviesViewHolder (private val binding: ItemsListBinding): RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("WrongConstant")
-        fun bind(movies: MoviesEntity) {
-            with(binding) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    tvItemDescription.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
-                }
-                tvItemTitle.text = movies.title
-                tvItemDescription.text = movies.overview
-
-                Glide.with(itemView.context)
-                    .load(BASE_URL + movies.poster_path)
-                    .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
-                    .into(imgPoster)
-
-                itemView.setOnClickListener {
-                    val detail = "Movies"
-                    val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_MOVIES, movies.id)
-                    intent.putExtra(DetailActivity.EXTRA_DATA, detail)
-                    itemView.context.startActivity(intent)
-                }
-            }
         }
     }
 }

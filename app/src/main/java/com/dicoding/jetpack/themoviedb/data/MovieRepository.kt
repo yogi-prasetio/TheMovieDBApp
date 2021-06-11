@@ -9,7 +9,6 @@ import com.dicoding.jetpack.themoviedb.data.source.remote.ApiResponse
 import com.dicoding.jetpack.themoviedb.data.source.remote.RemoteDataSource
 import com.dicoding.jetpack.themoviedb.data.source.remote.response.MoviesResponse
 import com.dicoding.jetpack.themoviedb.data.source.remote.response.TvShowResponse
-import com.dicoding.jetpack.themoviedb.utils.AppExecutors
 import com.dicoding.jetpack.themoviedb.utils.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +38,7 @@ class MovieRepository @Inject constructor (
                 remoteDataSource.getPopularMovie()
 
             public override fun saveCallResult(data: List<MoviesResponse>) {
-                val listMovie = ArrayList<MoviesEntity>()
+                val movieList = ArrayList<MoviesEntity>()
                 for (item in data) {
                     val movie = MoviesEntity(
                         null,
@@ -47,15 +46,14 @@ class MovieRepository @Inject constructor (
                         item.poster_path,
                         item.title,
                         item.release_date,
-                        item.runtime,
                         item.vote_average,
                         item.overview,
                         false
                     )
-                    listMovie.add(movie)
+                    movieList.add(movie)
                 }
 
-                localDataSource.insertMovies(listMovie)
+                localDataSource.insertMovies(movieList)
             }
 
         }.asLiveData()

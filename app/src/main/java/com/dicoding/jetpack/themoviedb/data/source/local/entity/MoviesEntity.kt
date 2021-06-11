@@ -30,10 +30,6 @@ data class MoviesEntity(
     var release_date: String? = null,
 
     @NonNull
-    @ColumnInfo(name = "runtime")
-    var runtime: Int? = 0,
-
-    @NonNull
     @ColumnInfo(name = "rating")
     var vote_average: String? = null,
 

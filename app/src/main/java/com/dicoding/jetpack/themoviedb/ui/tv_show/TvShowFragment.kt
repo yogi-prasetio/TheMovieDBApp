@@ -28,8 +28,8 @@ class TvShowFragment : DaggerFragment() {
         return frgmntbinding!!.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         activity?.let {
             viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
@@ -57,11 +57,6 @@ class TvShowFragment : DaggerFragment() {
                 rvTvShow.adapter = tvAdapter
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        frgmntbinding = null
     }
 
     private fun showLoading(state: Boolean){

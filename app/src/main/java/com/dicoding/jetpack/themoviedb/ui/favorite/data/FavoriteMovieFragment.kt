@@ -53,7 +53,8 @@ class FavoriteMovieFragment : DaggerFragment() {
                                     if (it.isNullOrEmpty()){
                                         rvFavoriteMovies.visibility = View.GONE
                                         progressBar.visibility = View.GONE
-                                        Toast.makeText(context, "Data is Empty!", Toast.LENGTH_SHORT).show()
+                                        dataEmpty.visibility = View.VISIBLE
+                                        tvDesc.visibility = View.VISIBLE
                                     } else {
                                         progressBar.visibility = View.GONE
                                         adapter.submitList(it)

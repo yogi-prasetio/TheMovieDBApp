@@ -34,18 +34,6 @@ class TvShowAdapter : PagedListAdapter<TvShowEntity, TvShowAdapter.TvViewHolder>
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvViewHolder {
-        val itemsTvBinding = ItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TvViewHolder(itemsTvBinding)
-    }
-
-    override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
-        val listTv = getItem(position)
-        if (listTv != null) {
-            holder.bind(listTv)
-        }
-    }
-
     class TvViewHolder(private val binding: ItemsListBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("WrongConstant")
         fun bind(data: TvShowEntity) {
@@ -68,6 +56,18 @@ class TvShowAdapter : PagedListAdapter<TvShowEntity, TvShowAdapter.TvViewHolder>
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
                     .into(imgPoster)
             }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvViewHolder {
+        val itemsTvBinding = ItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TvViewHolder(itemsTvBinding)
+    }
+
+    override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
+        val listTv = getItem(position)
+        if (listTv != null) {
+            holder.bind(listTv)
         }
     }
 }

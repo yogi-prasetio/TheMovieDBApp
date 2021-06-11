@@ -24,6 +24,5 @@ class ViewModelFactory @Inject constructor(private val mRepository: MovieReposit
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
-
     }
 }
