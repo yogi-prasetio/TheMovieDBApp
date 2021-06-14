@@ -6,20 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.DetailActivity">
 
-    <ImageView
-        android:id="@+id/img_poster"
-        android:layout_width="180dp"
-        android:layout_height="270dp"
-        android:layout_margin="16dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/orange"
+        app:titleTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"/>
+
+    <ImageView
+        android:id="@+id/img_poster"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar"
         android:contentDescription="@string/poster" />
 
     <TextView
         android:id="@+id/tv_item_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:padding="4dp"
         android:textSize="20sp"
@@ -33,7 +44,6 @@
         android:id="@+id/title_release"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:padding="4dp"
         android:textSize="14sp"
@@ -45,7 +55,6 @@
         android:id="@+id/tv_item_release"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:paddingStart="8dp"
         android:paddingBottom="8dp"
@@ -59,7 +68,6 @@
         android:id="@+id/title_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:padding="4dp"
         android:textSize="14sp"
@@ -71,7 +79,6 @@
         android:id="@+id/tv_item_rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:paddingStart="8dp"
         android:paddingBottom="8dp"
@@ -79,32 +86,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_poster"
         app:layout_constraintTop_toBottomOf="@+id/title_rating"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:id="@+id/title_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:padding="4dp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:text="@string/duration"
-        app:layout_constraintStart_toEndOf="@+id/img_poster"
-        app:layout_constraintTop_toBottomOf="@+id/tv_item_rating"/>
-    <TextView
-        android:id="@+id/tv_item_duration"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:paddingStart="8dp"
-        android:paddingBottom="8dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_poster"
-        app:layout_constraintTop_toBottomOf="@+id/title_duration"
         tools:ignore="RtlSymmetry" />
 
     <TextView
@@ -119,6 +100,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_poster"
         tools:text="Actor" />
+
     <TextView
         android:id="@+id/tv_item_description"
         android:layout_width="match_parent"
@@ -140,6 +122,7 @@
         android:layout_marginEnd="16dp"
         android:foreground="@drawable/ic_share"
         android:foregroundGravity="center"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/circle_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/toggleFavorite"
@@ -157,6 +140,7 @@
         android:focusableInTouchMode="false"
         android:textOff=""
         android:textOn=""
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="1"
@@ -174,4 +158,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <Button
+        android:id="@+id/btn_view_web"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/view_on_website"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

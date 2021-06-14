@@ -46,7 +46,7 @@ class TvShowAdapter : PagedListAdapter<TvShowEntity, TvShowAdapter.TvViewHolder>
                 tvItemDescription.text = data.overview
                  itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_TV_SHOW, data.tvShow_id)
+                    intent.putExtra(DetailActivity.EXTRA_ID, data.tvShow_id)
                     intent.putExtra(DetailActivity.EXTRA_DATA, detail)
                     itemView.context.startActivity(intent)
                 }

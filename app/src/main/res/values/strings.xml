@@ -11,4 +11,6 @@
     <string name="movie">Movie</string>
     <string name="tv_show">Tv Show</string>
     <string name="favorite">Favorite</string>
+    <string name="creator">by Yogi Prasetio</string>
+    <string name="view_on_website">View on Website</string>
 </resources>

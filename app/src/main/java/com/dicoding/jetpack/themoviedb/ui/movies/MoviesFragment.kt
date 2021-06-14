@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpack.themoviedb.databinding.FragmentMoviesBinding
 import com.dicoding.jetpack.themoviedb.ui.home.MainViewModel
+import com.dicoding.jetpack.themoviedb.ui.tv_show.TvShowAdapter
 import com.dicoding.jetpack.themoviedb.utils.Status
 import com.dicoding.jetpack.themoviedb.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -21,7 +22,7 @@ class MoviesFragment : DaggerFragment() {
     private lateinit var viewModel: MainViewModel
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,44 +34,14 @@ class MoviesFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupRecyclerView()
 
-        activity?.let {
-            viewModel = ViewModelProvider(thi, viewModelFactory)[MainViewModel::class.java]
-            val tvAdapter = TvShowAdapter()
-
-            viewModel.getPopularTvShows().observe(viewLifecycleOwner, {
-                if (it!=null) {
-                    when(it.status) {
-                        Status.LOADING -> showLoading(true)
-                        Status.SUCCESS -> {
-                            showLoading(false)
-                            tvAdapter.submitList(it.data)
-                        }
-                        Status.ERROR -> {
-                            showLoading(false)
-                            Toast.makeText(context, "Failed to load data!", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            })
-
-            binding.apply {
-                rvTvShow.layoutManager = LinearLayoutManager(context)
-                rvTvShow.setHasFixedSize(true)
-                rvTvShow.adapter = tvAdapter
-            }
-        }
+        activity?.let { setupViewModel(it) }
+        observeListMovies()
     }
 
-    private fun showLoading(state: Boolean){
-        if (state){
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
-    }
     private fun setupViewModel(fragmentActivity: FragmentActivity) {
-        viewModel = ViewModelProvider(fragmentActivity, factory)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(fragmentActivity, viewModelFactory)[MainViewModel::class.java]
     }
 
     private fun observeListMovies() {

@@ -18,18 +18,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dicoding.jetpack.themoviedb.ui.home.MainActivity" />
         </activity>
-        <activity
-            android:name=".ui.SplashActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        <activity android:name=".ui.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".ui.home.MainActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".ui.home.MainActivity"/>
     </application>
 
 </manifest>

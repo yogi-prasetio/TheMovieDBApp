@@ -30,13 +30,13 @@ class FavoriteTvShowFragment : DaggerFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         frgmntbinding = FavoriteTvShowFragmentBinding.inflate(layoutInflater, container, false)
         return frgmntbinding!!.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         binding.apply {
             rvFavoriteTvShows.layoutManager = LinearLayoutManager(context)

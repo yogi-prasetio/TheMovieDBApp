@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpack.themoviedb.R
 import com.dicoding.jetpack.themoviedb.databinding.FavoriteFragmentBinding
 import com.dicoding.jetpack.themoviedb.databinding.FavoriteMovieFragmentBinding
+import com.dicoding.jetpack.themoviedb.databinding.FragmentMoviesBinding
 import com.dicoding.jetpack.themoviedb.ui.favorite.FavoriteViewModel
 import com.dicoding.jetpack.themoviedb.ui.favorite.SectionPagerAdapter
 import com.dicoding.jetpack.themoviedb.ui.movies.MoviesAdapter
@@ -36,8 +37,8 @@ class FavoriteMovieFragment : DaggerFragment() {
         return frgmntbinding!!.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         activity?.let {
             viewModel = ViewModelProvider(this, viewModelFactory)[FavoriteViewModel::class.java]
@@ -73,10 +74,5 @@ class FavoriteMovieFragment : DaggerFragment() {
                 rvFavoriteMovies.adapter = moviesAdapter
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        frgmntbinding = null
     }
 }

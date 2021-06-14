@@ -1,6 +1,9 @@
 package com.dicoding.jetpack.themoviedb.ui.detail
 
 import android.annotation.SuppressLint
+import android.app.SearchManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Layout
@@ -20,13 +23,14 @@ import javax.inject.Inject
 class DetailActivity : DaggerAppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
+    private lateinit var data: String
+    private lateinit var url: String
 
     @Inject
     lateinit var factory: ViewModelFactory
 
     companion object {
-        const val EXTRA_TV_SHOW = "extra_tv_show"
-        const val EXTRA_MOVIES = "extra_movies"
+        const val EXTRA_ID = "extra_id"
         const val EXTRA_DATA = "extra_data"
         const val BASE_URL = "https://image.tmdb.org/t/p/original"
     }
@@ -39,35 +43,45 @@ class DetailActivity : DaggerAppCompatActivity() {
 
         viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
-        val id = intent.getIntExtra(EXTRA_MOVIES, 0)
-        val idTv = intent.getIntExtra(EXTRA_TV_SHOW, 0)
-        val data = intent.getStringExtra(EXTRA_DATA)
+        val id = intent.getIntExtra(EXTRA_ID, 0)
+        data = intent.getStringExtra(EXTRA_DATA).toString()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             binding.tvItemDescription.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
         }
 
-        if (data?.equals("Movies") == true) {
+        if (data.equals("Movies") == true) {
             detailMovieObserve(id)
-        } else if (data?.equals("Tv Show") == true) {
-            detailTvShowObserve(idTv)
+            url = "https://themoviedb.org/movie/" + id
+        } else if (data.equals("Tv Show") == true) {
+            detailTvShowObserve(id)
+            url = "https://themoviedb.org/tv/" + id
         }
         showLoading(true)
+
+        binding.btnViewWeb.setOnClickListener {
+            val webpage: Uri = Uri.parse(url)
+            Intent(Intent.ACTION_VIEW, webpage).also {
+                startActivity(Intent.createChooser(it, "Open with "))
+            }
+        }
+
     }
 
     private fun detailMovieObserve(movieId: Int) {
+        setSupportActionBar(binding.mainToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detail Movie"
+
         viewModel.getMovieDetail(movieId).observe(this, { movies ->
             val status = movies?.isFavorite
             status?.let { setStatus(it)}
-//            val hour =  movies.runtime!!.div(60)
-//            val minutes = movies.runtime!!.rem(60)
 
             if(movies != null){
                 binding.apply {
                     tvItemTitle.text = movies.title
                     tvItemRelease.text = movies.release_date
                     tvItemRating.text = movies.vote_average
-//                    tvItemDuration.text = "${hour}h ${minutes}m"
                     tvItemDescription.text = movies.overview
 
                     Glide.with(this@DetailActivity)
@@ -76,6 +90,8 @@ class DetailActivity : DaggerAppCompatActivity() {
                             .into(imgPoster)
                 }
                 showLoading(false)
+
+                binding.buttonShare.setOnClickListener { share() }
 
                 binding.toggleFavorite.setOnClickListener {
                     setFavorite(movies, null)
@@ -86,6 +102,10 @@ class DetailActivity : DaggerAppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun detailTvShowObserve(tvShowId: Int) {
+        setSupportActionBar(binding.mainToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detail Tv Show"
+
         viewModel.getTvShowDetail(tvShowId).observe(this, { tvShow ->
             val status = tvShow?.isFavorite
             status?.let { setStatus(it) }
@@ -95,7 +115,6 @@ class DetailActivity : DaggerAppCompatActivity() {
                     tvItemTitle.text = tvShow.name
                     tvItemRelease.text = tvShow.first_air_date
                     tvItemRating.text = tvShow.vote_average
-                    tvItemDuration.text = "Unknown"
                     tvItemDescription.text = tvShow.overview
 
                     Glide.with(this@DetailActivity)
@@ -104,6 +123,8 @@ class DetailActivity : DaggerAppCompatActivity() {
                             .into(imgPoster)
                 }
                 showLoading(false)
+
+                binding.buttonShare.setOnClickListener { share() }
 
                 binding.toggleFavorite.setOnClickListener {
                     setFavorite(null, tvShow)
@@ -134,6 +155,14 @@ class DetailActivity : DaggerAppCompatActivity() {
 
     private fun setStatus(status: Boolean){
         binding.toggleFavorite.isChecked = status
+    }
+
+    private fun share(){
+        val sendIntent = Intent()
+        sendIntent.setAction(Intent.ACTION_SEND)
+        sendIntent.putExtra(Intent.EXTRA_TEXT, url)
+        sendIntent.setType("text/plain")
+        startActivity(Intent.createChooser(sendIntent, "Share to"))
     }
 
     private fun showLoading(state: Boolean){
